@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Citation Generator",
+    "description": "Generates citations from the current tab's title and URL.",
+    "version": "0.1.0",
+    "action": {
+        "default_title": "Generate citation",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ]
+}

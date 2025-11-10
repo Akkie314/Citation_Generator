@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Document Title Viewer</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <main>
+        <h1>引用URLジェネレータ</h1>
+        <div class="data-box">
+            <label>
+                <div class="data-key">
+                    引用形式
+                </div>
+                <input type="text" value="https://google.com/" id="citation_format" class="data-value" readonly>
+                <button class="copy-btn">Copy</button>
+            </label>
+        </div>
+        <hr>
+        <h3>取得情報</h3>
+        <div class="data-box">
+            <label>
+                <div class="data-key">
+                    タイトル
+                </div>
+                <input type="text" value="取得できませんでした" id="title" class="data-value" readonly>
+                <button class="copy-btn">Copy</button>
+            </label>
+        </div>
+        <div class="data-box">
+            <label>
+                <div class="data-key">
+                    URL
+                </div>
+                <input type="text" value="取得できませんでした" id="url" class="data-value" readonly>
+                <button class="copy-btn">Copy</button>
+            </label>
+        </div>
+        <div class="data-box">
+            <label>
+                <div class="data-key">
+                    閲覧日
+                </div>
+                <input type="text" value="取得できませんでした" id="citation_date" class="data-value" readonly>
+                <button class="copy-btn">Copy</button>
+            </label>
+        </div>
+        <div class="data-box">
+            <label>
+                <div class="data-key">
+                    サイト名
+                </div>
+                <input type="text" value="取得できませんでした" id="site_name" class="data-value" readonly>
+                <button class="copy-btn">Copy</button>
+            </label>
+        </div>
+    </main>
+    <script src="popup.js"></script>
+</body>
+
+</html>
