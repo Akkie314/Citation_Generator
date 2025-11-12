@@ -1,4 +1,37 @@
-function getCitationData() {
+const DEFAULT_CITATION_FORMAT = '{site_name}、「{title}」、{url}（閲覧日：{now_date}）';
+
+// 形式を書き込む
+function saveCitationFormat(citationFormat) {
+    chrome.storage.local.set({ citationFormat }, () => {
+        console.log('Citation format saved:', citationFormat);
+    });
+}
+// 形式を読み込む
+function loadCitationFormat(callback) {
+    return new Promise((resolve) => {
+        chrome.storage.local.get(['citationFormat'], (result) => {
+            const format = result.citationFormat;
+            if (format) {
+                resolve(format);
+            } else {
+                resolve(DEFAULT_CITATION_FORMAT);
+            }
+        });
+    });
+}
+
+// 形式に従いて引用データを作成
+async function applyCitationFormat(title, url, now_date, site_name) {
+    let citationFormat = await loadCitationFormat();
+    citationFormat = citationFormat.replace('{site_name}', site_name);
+    citationFormat = citationFormat.replace('{title}', title);
+    citationFormat = citationFormat.replace('{url}', url);
+    citationFormat = citationFormat.replace('{now_date}', now_date);
+
+    return citationFormat;
+}
+
+async function getCitationData() {
     (async () => {
         // アクティブで現在のウィンドウにあるタブを取得
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -13,7 +46,7 @@ function getCitationData() {
                         success: false,
                         title: "",
                         url: "",
-                        now_data: "",
+                        now_date: "",
                         site_name: ""
                     };
 
@@ -22,7 +55,7 @@ function getCitationData() {
                     // URLを設定
                     template.url = window.location.href;
                     // 日付を設定
-                    template.now_data = new Date().toISOString().split('T')[0];
+                    template.now_date = new Date().toISOString().split('T')[0];
 
                     // サイト名を設定
                     const metaSiteName = document.querySelector("meta[property='og:site_name']");
@@ -54,18 +87,31 @@ function getCitationData() {
                 // ポップアップの要素にデータを表示
                 document.getElementById('title').value = citationData.title;
                 document.getElementById('url').value = citationData.url;
-                document.getElementById('citation_date').value = citationData.now_data;
+                document.getElementById('citation_date').value = citationData.now_date;
                 document.getElementById('site_name').value = citationData.site_name;
 
                 // 引用形式を表示
-                const citationFormat = `${citationData.site_name}、「${citationData.title}」、${citationData.url}（閲覧日：${citationData.now_data}）`;
-                document.getElementById('citation_format').value = citationFormat;
+                const citationFormat = await applyCitationFormat(
+                    citationData.title,
+                    citationData.url,
+                    citationData.now_date,
+                    citationData.site_name
+                );
+                document.getElementById('citation_text').value = citationFormat;
             }
         }
     })();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    let citationFormat = await loadCitationFormat();
+    document.getElementById('citation_format').value = citationFormat;
+    document.getElementById('citation_format').addEventListener('input', (event) => {
+        const newFormat = event.target.value;
+        saveCitationFormat(newFormat);
+        getCitationData();
+    });
+
     getCitationData();
 
     const copyButtons = document.querySelectorAll('.copy-btn');
@@ -87,5 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
             }
         });
+    });
+
+    const resetButton = document.querySelector('.reset-btn');
+    resetButton.addEventListener('click', () => {
+        document.getElementById('citation_format').value = DEFAULT_CITATION_FORMAT;
+        saveCitationFormat(DEFAULT_CITATION_FORMAT);
+        getCitationData();
     });
 });

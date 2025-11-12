@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="jp">
 
 <head>
     <meta charset="utf-8">
@@ -9,14 +9,14 @@
 
 <body>
     <main>
-        <h1>引用URLジェネレータ</h1>
+        <h1>引用文ジェネレータ</h1>
         <div class="data-box">
             <label>
                 <div class="data-key">
-                    引用形式
+                    引用文
                 </div>
-                <input type="text" value="https://google.com/" id="citation_format" class="data-value" readonly>
-                <button class="copy-btn">Copy</button>
+                <input type="text" value="https://google.com/" id="citation_text" class="data-value" readonly>
+                <button class="copy-btn btn">Copy</button>
             </label>
         </div>
         <hr>
@@ -27,7 +27,7 @@
                     タイトル
                 </div>
                 <input type="text" value="取得できませんでした" id="title" class="data-value" readonly>
-                <button class="copy-btn">Copy</button>
+                <button class="copy-btn btn">Copy</button>
             </label>
         </div>
         <div class="data-box">
@@ -36,7 +36,7 @@
                     URL
                 </div>
                 <input type="text" value="取得できませんでした" id="url" class="data-value" readonly>
-                <button class="copy-btn">Copy</button>
+                <button class="copy-btn btn">Copy</button>
             </label>
         </div>
         <div class="data-box">
@@ -45,7 +45,7 @@
                     閲覧日
                 </div>
                 <input type="text" value="取得できませんでした" id="citation_date" class="data-value" readonly>
-                <button class="copy-btn">Copy</button>
+                <button class="copy-btn btn">Copy</button>
             </label>
         </div>
         <div class="data-box">
@@ -54,8 +54,22 @@
                     サイト名
                 </div>
                 <input type="text" value="取得できませんでした" id="site_name" class="data-value" readonly>
-                <button class="copy-btn">Copy</button>
+                <button class="copy-btn btn">Copy</button>
             </label>
+        </div>
+        <hr>
+        <h3>オプション</h3>
+        <div class="data-box">
+            <label>
+                <div class="data-key">
+                    形式
+                </div>
+                <input type="text" value="取得できませんでした" id="citation_format" class="data-value">
+                <button class="reset-btn btn">Reset</button>
+            </label>
+            <p style="color:#808080">
+                プレースホルダー: {site_name}, {title}, {url}, {now_data}
+            </p>
         </div>
     </main>
     <script src="popup.js"></script>

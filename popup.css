@@ -50,7 +50,7 @@ input.data-value:focus {
     outline: 1px solid #027BFF;
 }
 
-button.copy-btn {
+button.btn {
     width: 6rem;
     background: #027BFF;
     color: #eee;
@@ -59,6 +59,6 @@ button.copy-btn {
     border-left: 1px solid #CED4DB;
 }
 
-button.copy-btn:active {
+button.btn:active {
     filter: brightness(0.75);
 }

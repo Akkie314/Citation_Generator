@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Citation Generator",
-    "description": "Generates citations from the current tab's title and URL.",
+    "description": "閲覧中のページのタイトルやURLを取得し、指定した形式で引用文を生成・コピーできる拡張機能です。",
     "version": "0.1.0",
     "action": {
         "default_title": "Generate citation",
@@ -9,6 +9,7 @@
     },
     "permissions": [
         "activeTab",
-        "scripting"
+        "scripting",
+        "storage"
     ]
 }
