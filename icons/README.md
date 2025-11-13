@@ -1,1 +1,0 @@
-Add your extension icons here (PNG format). Update `manifest.json` if you rename or move them.
