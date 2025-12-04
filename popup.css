@@ -57,6 +57,8 @@ button.btn {
     outline: 0;
     border: 0;
     border-left: 1px solid #CED4DB;
+
+    cursor: pointer;
 }
 
 button.btn:active {
