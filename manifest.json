@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Citation Generator",
     "description": "閲覧中のページのタイトルやURLを取得し、指定した形式で出典情報を生成・コピーできる拡張機能です。",
-    "version": "0.1.0",
+    "version": "1.0.1",
     "action": {
         "default_title": "Generate citation",
         "default_popup": "popup.html",

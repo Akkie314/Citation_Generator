@@ -17,18 +17,18 @@ h1, h2, h3, h4, h5, h6 {
     margin: 1rem 0;
 }
 
-div.data-box {
+div.date-box {
     margin-bottom: 1rem;
 }
 
-div.data-box>label {
+div.date-box>label {
     display: flex;
     border: 1px solid #CED4DB;
     border-radius: .5rem;
     overflow: hidden;
 }
 
-div.data-key {
+div.date-key {
     width: 20%;
     height: 2rem;
     background: #EAECEF;
@@ -39,15 +39,15 @@ div.data-key {
     line-height: 2rem;
 }
 
-input.data-value {
+input.date-value {
     width: calc(calc(100% - 20%) - 6rem);
     padding: 0 1rem;
     outline: 0;
     border: 0;
 }
 
-input.data-value:focus {
-    outline: 1px solid #027BFF;
+input.date-value:focus {
+    border: 1px solid #027BFF;
 }
 
 button.btn {
@@ -61,4 +61,22 @@ button.btn {
 
 button.btn:active {
     filter: brightness(0.75);
+}
+
+div.tips {
+    position: fixed;
+    max-width: calc(calc(100% - 2rem) - 20%);
+    overflow-wrap: break-word;
+
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+
+    padding: 0.5rem 1rem;
+
+    font-size: .75rem;
+    color: rgb(255 255 255 / 0.9);
+
+    background-color: rgb(0 0 0 / 0.5);
+    border-radius: .5rem;
 }

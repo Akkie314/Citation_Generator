@@ -31,7 +31,7 @@ async function applyCitationFormat(title, url, now_date, site_name) {
     return citationFormat;
 }
 
-async function getCitationData() {
+async function getCitationdate() {
     (async () => {
         // アクティブで現在のウィンドウにあるタブを取得
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -83,19 +83,26 @@ async function getCitationData() {
 
             // 実行結果を受け取る
             if (injectionResults && injectionResults.length > 0) {
-                const citationData = injectionResults[0].result;
+                const citationdate = injectionResults[0].result;
                 // ポップアップの要素にデータを表示
-                document.getElementById('title').value = citationData.title;
-                document.getElementById('url').value = citationData.url;
-                document.getElementById('citation_date').value = citationData.now_date;
-                document.getElementById('site_name').value = citationData.site_name;
+                document.getElementById('title').value = citationdate.title;
+                document.getElementById("title").setAttribute("data-default", citationdate.title);
+
+                document.getElementById('url').value = citationdate.url;
+                document.getElementById("url").setAttribute("data-default", citationdate.url);
+
+                document.getElementById('citation_date').value = citationdate.now_date;
+                document.getElementById("citation_date").setAttribute("data-default", citationdate.now_date);
+
+                document.getElementById('site_name').value = citationdate.site_name;
+                document.getElementById("site_name").setAttribute("data-default", citationdate.site_name);
 
                 // 引用形式を表示
                 const citationFormat = await applyCitationFormat(
-                    citationData.title,
-                    citationData.url,
-                    citationData.now_date,
-                    citationData.site_name
+                    citationdate.title,
+                    citationdate.url,
+                    citationdate.now_date,
+                    citationdate.site_name
                 );
                 document.getElementById('citation_text').value = citationFormat;
             }
@@ -109,11 +116,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('citation_format').addEventListener('input', (event) => {
         const newFormat = event.target.value;
         saveCitationFormat(newFormat);
-        getCitationData();
+        getCitationdate();
     });
 
-    getCitationData();
+    getCitationdate();
 
+    // コピー処理
     const copyButtons = document.querySelectorAll('.copy-btn');
     copyButtons.forEach(button => {
         button.addEventListener('click', (event) => {
@@ -135,10 +143,64 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // リセットボタンの処理
     const resetButton = document.querySelector('.reset-btn');
     resetButton.addEventListener('click', () => {
         document.getElementById('citation_format').value = DEFAULT_CITATION_FORMAT;
         saveCitationFormat(DEFAULT_CITATION_FORMAT);
-        getCitationData();
+        getCitationdate();
+    });
+
+
+    const tips = document.querySelector('.tips');
+    const inputFields = document.querySelectorAll("input[type='text']");
+
+    inputFields.forEach(input => {
+        // マウスオーバーでTip表示
+        input.addEventListener('mouseenter', (event) => {
+            const fieldValue = input.value;
+            tips.textContent = fieldValue;
+            tips.style.opacity = 1;
+            
+            // マウスカーソルの位置に応じてTipを配置
+            const rect = input.getBoundingClientRect();
+            tips.style.left = rect.left + 'px';
+            // マウスの上側に配置、もし上にスペースがなければ下側に配置
+            if (rect.top - tips.offsetHeight > 0) {
+                tips.style.top = (rect.top - tips.offsetHeight - 5) + 'px';
+            } else {
+                tips.style.top = (rect.bottom + 5) + 'px';
+            }
+        });
+        input.addEventListener('mouseleave', () => {
+            tips.style.opacity = 0;
+        });
+
+        // 内容変更で,  出店情報とTipも更新
+        input.addEventListener('input', async () => {
+            applyCitationFormatFromElements();
+            tips.textContent = input.value;
+        });
+
+        input.addEventListener("change", () => {
+            // 内容が無いならデフォルト文言を表示
+            if (input.value.trim() === '') {
+                input.value = input.getAttribute("data-default") || "";
+
+                applyCitationFormatFromElements();
+                tips.textContent = input.value;
+            }
+        })
     });
 });
+
+
+async function applyCitationFormatFromElements() {
+    const citationFormat = await applyCitationFormat(
+        document.getElementById('title').value,
+        document.getElementById('url').value,
+        document.getElementById('citation_date').value,
+        document.getElementById('site_name').value
+    );
+    document.getElementById('citation_text').value = citationFormat;
+}
