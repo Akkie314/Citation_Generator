@@ -17,6 +17,10 @@ h1, h2, h3, h4, h5, h6 {
     margin: 1rem 0;
 }
 
+a:link {
+    color: #888;
+}
+
 div.date-box {
     margin-bottom: 1rem;
 }
@@ -63,6 +67,14 @@ button.btn {
 
 button.btn:active {
     filter: brightness(0.75);
+}
+
+img.text-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+
+    stroke: #888;
 }
 
 div.tips {
