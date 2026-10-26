@@ -15,6 +15,7 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "tldts": "^7.4.19",
     "vue": "^3.5.29"
   },
   "devDependencies": {
