@@ -12,9 +12,18 @@ function hostnameToSiteName(url: string | undefined): string | undefined {
     }
 }
 
+function formatDateInJst(date: Date): string {
+    return new Intl.DateTimeFormat("sv-SE", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    }).format(date);
+}
+
 export async function getPageInfo(now: Date = new Date()): Promise<PageInfo> {
     const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
-    const accessedAt = now.toISOString().slice(0, 10);
+    const accessedAt = formatDateInJst(now);
 
     if (!tab) return { accessedAt };
 
