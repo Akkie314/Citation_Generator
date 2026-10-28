@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { useCopy } from '@/composables/use-copy';
 
 const props = withDefaults(defineProps<{
