@@ -6,6 +6,7 @@ const props = withDefaults(defineProps<{
     label: string;
     value?: string;
     editable?: boolean;
+    defaultValue?: string;
 }>(), {
     editable: false,
 });
@@ -14,6 +15,7 @@ const emit = defineEmits<{
     (e: 'update:value', value: string): void;
 }>();
 
+
 const { copy, copied, error } = useCopy();
 
 const inputValue = ref<string>(props.value || "");
@@ -21,9 +23,15 @@ watch(() => props.value, (v) => {
     inputValue.value = v || "";
 });
 
+const isResettable = computed(() => props.defaultValue !== undefined);
+
 const onCopy = () => copy(inputValue.value);
 const onInput = () => {
     if (props.editable) emit('update:value', inputValue.value);
+};
+const onReset = () => {
+    inputValue.value = props.defaultValue ?? "";
+    emit('update:value', inputValue.value);
 };
 </script>
 
@@ -32,9 +40,16 @@ const onInput = () => {
         <div class="tooltip" role="tooltip">{{ inputValue }}</div>
         <label>
             <span class="key">{{ label }}</span>
-            <input v-model="inputValue" type="text" class="value" placeholder="取得できませんでした" :readonly="!editable" @input="onInput"/>
-            <button type="button" class="copy-btn" :class="{error}" @click="onCopy">
-                {{ error ? 'Failed': copied ? 'Copied' : 'Copy' }}
+            <input v-model="inputValue" type="text" class="value" placeholder="取得できませんでした" :readonly="!editable"
+                @input="onInput" />
+            <!-- リセットボタン -->
+            <button v-if="isResettable" type="button" class="copy-btn reset" :disabled="inputValue === defaultValue"
+                @click="onReset">
+                Reset
+            </button>
+            <!-- コピーボタン -->
+            <button v-else type="button" class="copy-btn" :class="{ error }" @click="onCopy">
+                {{ error ? 'Failed' : copied ? 'Copied' : 'Copy' }}
             </button>
         </label>
     </div>

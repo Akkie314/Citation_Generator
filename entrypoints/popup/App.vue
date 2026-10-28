@@ -7,13 +7,27 @@ import { templateSetting } from '@/utils/settings';
 import DataBox from '@/components/DataBox.vue';
 
 const pageInfo = ref<PageInfo>();
+const template = ref<string>("");
 const formatedText = ref<string>("");
 
+
 onMounted(async () => {
-  const template:string = await templateSetting.getValue();
+  template.value = await templateSetting.getValue();
   pageInfo.value = await getPageInfo();
-  formatedText.value = formatCitation(template, pageInfo.value);
+  render();
 })
+
+const render = () => {
+  if (pageInfo.value) {
+    formatedText.value = formatCitation(template.value, pageInfo.value);
+  }
+};
+
+const onTemplateChange = async (value: string) => {
+  template.value = value;
+  await templateSetting.setValue(value);
+  render();
+};
 </script>
 
 <template>
@@ -29,7 +43,7 @@ onMounted(async () => {
   <hr />
 
   <h3>オプション</h3>
-  <DataBox label="形式" :value="'{site_name}、「{title}」、{url}（閲覧日：{now_date}）'"/>
+  <DataBox label="形式" editable :value="template" default-value="{site_name}、「{title}」、{url}（閲覧日：{now_date}）" @update:value="onTemplateChange"/>
   <p>プレースホルダー: {site_name}, {title}, {url}, {now_date}</p>
 </template>
 
