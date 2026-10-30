@@ -14,7 +14,6 @@ function hostnameToSiteName(url: string | undefined): string | undefined {
 
 function formatDateInJst(date: Date): string {
     return new Intl.DateTimeFormat("sv-SE", {
-        timeZone: "Asia/Tokyo",
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
