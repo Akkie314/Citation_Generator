@@ -1,13 +1,15 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import type { PageInfo } from '@/utils/types';
 import { getPageInfo } from '@/utils/get-page-info';
 import { formatCitation } from '@/utils/format-citation';
-import { templateSetting } from '@/utils/settings';
+import { templateSetting, DEFAULT_TEMPLATE } from '@/utils/settings';
 import DataBox from '@/components/DataBox.vue';
+import CopyButton from '@/components/CopyButton.vue';
+import ResetButton from '@/components/ResetButton.vue';
 
-const pageInfo = ref<PageInfo>();
-const template = ref<string>("");
+const pageInfo = ref<PageInfo>({accessedAt: ""});
+const template = ref<string>(DEFAULT_TEMPLATE);
 const formatedText = ref<string>("");
 
 
@@ -23,27 +25,38 @@ const render = () => {
   }
 };
 
-const onTemplateChange = async (value: string) => {
-  template.value = value;
+watch(template, async (value) => {
   await templateSetting.setValue(value);
   render();
-};
+});
 </script>
 
 <template>
   <h1>出典情報ジェネレータ</h1>
-  <DataBox label="出典情報" :value="formatedText" />
+  <DataBox label="出典情報" :model-value="formatedText">
+    <CopyButton :text="formatedText"/>
+  </DataBox>
   <hr />
 
   <h3>取得情報</h3>
-  <DataBox label="タイトル" :value="pageInfo?.title" />
-  <DataBox label="URL" :value="pageInfo?.url" />
-  <DataBox label="閲覧日" :value="pageInfo?.accessedAt" />
-  <DataBox label="サイト名" :value="pageInfo?.siteName" />
+  <DataBox label="タイトル" :model-value="pageInfo.title">
+    <CopyButton :text="pageInfo.title"/>
+  </DataBox>
+  <DataBox label="URL" :model-value="pageInfo.url">
+    <CopyButton :text="pageInfo.url"/>
+  </DataBox>
+  <DataBox label="閲覧日" :model-value="pageInfo.accessedAt">
+    <CopyButton :text="pageInfo.accessedAt"/>
+  </DataBox>
+  <DataBox label="サイト名" :model-value="pageInfo.siteName">
+    <CopyButton :text="pageInfo.siteName"/>
+  </DataBox>
   <hr />
 
   <h3>オプション</h3>
-  <DataBox label="形式" editable :value="template" default-value="{site_name}、「{title}」、{url}（閲覧日：{now_date}）" @update:value="onTemplateChange"/>
+  <DataBox label="形式" editable v-model="template">
+    <ResetButton v-model="template" :default-value="DEFAULT_TEMPLATE"/>
+  </DataBox>
   <p>プレースホルダー: {site_name}, {title}, {url}, {now_date}</p>
 </template>
 
