@@ -12,7 +12,7 @@ function hostnameToSiteName(url: string | undefined): string | undefined {
     }
 }
 
-function formatDateInJst(date: Date): string {
+function formatDate(date: Date): string {
     return new Intl.DateTimeFormat("sv-SE", {
         year: "numeric",
         month: "2-digit",
@@ -22,7 +22,7 @@ function formatDateInJst(date: Date): string {
 
 export async function getPageInfo(now: Date = new Date()): Promise<PageInfo> {
     const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
-    const accessedAt = formatDateInJst(now);
+    const accessedAt = formatDate(now);
 
     if (!tab) return { accessedAt };
 
