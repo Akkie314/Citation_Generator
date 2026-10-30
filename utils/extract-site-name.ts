@@ -1,5 +1,5 @@
 export function extractSiteName(): string | undefined {
-    const meta = (key: string): string | undefined => document.querySelector<HTMLElement>(`meta[property="${key}"], meta[name="${key}"]`)?.content?.trim() || undefined;
+    const meta = (key: string): string | undefined => document.querySelector<HTMLMetaElement>(`meta[property="${key}"], meta[name="${key}"]`)?.content?.trim() || undefined;
 
     const fromJsonLd = (): string | undefined => {
         for (const elem of document.querySelectorAll('script[type="application/ld+json"]')) {
