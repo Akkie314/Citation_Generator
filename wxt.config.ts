@@ -11,5 +11,8 @@ export default defineConfig({
       'scripting',
       'storage'
     ]
+  },
+  zip: {
+    excludeSources: ['web/**'],
   }
 });
