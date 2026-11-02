@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import ChangeLog from './components/ChangeLog.vue';
+
 </script>
 
 <template>
-  <HelloWorld />
+  <ChangeLog/>
 </template>
