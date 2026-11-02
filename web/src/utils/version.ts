@@ -10,5 +10,5 @@ export function filterChangeLog(
     
     if (fromIndex === -1 || toIndex === -1 ) return []
 
-    return entries.slice(toIndex, fromIndex + 1);
+    return entries.slice(toIndex, fromIndex);
 }
