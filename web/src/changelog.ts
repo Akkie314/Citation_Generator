@@ -23,10 +23,10 @@ export const changeLog: ChangeLogEntry[] = [
         date: '2025/12/4',
         changes: [{
             type: 'fixed',
-            text: '`data`のスペルミスを`date`に修正しました。'
+            title: '`data`のスペルミスを`date`に修正しました。'
         }, {
             type: 'added',
-            text: '入力欄をホバーした際に全文を表示する機能を追加しました。'
+            title: '入力欄をホバーした際に全文を表示する機能を追加しました。'
         }]
     },
     {
