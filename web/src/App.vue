@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ChangeLog from './components/ChangeLog.vue';
+import ChangeLogList from './components/ChangeLogList.vue';
 
 </script>
 
 <template>
-  <ChangeLog/>
+  <ChangeLogList/>
 </template>

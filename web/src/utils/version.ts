@@ -1,10 +1,10 @@
-import type { ChangeLogEntry } from "../changelog";
+import type { ChangeEntry } from "../changelog";
 
 export function filterChangeLog(
-    entries: ChangeLogEntry[],
+    entries: ChangeEntry[],
     from?: string | null,
     to?: string | null
-): ChangeLogEntry[] {
+): ChangeEntry[] {
     const fromIndex = from ? entries.findIndex((e) => e.version === from) : entries.length - 1;
     const toIndex = to ? entries.findIndex((e) => e.version === to) : 0
     

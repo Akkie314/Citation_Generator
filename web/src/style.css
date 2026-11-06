@@ -1,6 +1,6 @@
 :root {
-  --text: #333;
-  --text-muted: #777;
+  --title: #333;
+  --title-muted: #777;
   --bg: #fff;
   --border: #e5e5e5;
 
@@ -11,7 +11,7 @@
 
   font-family: system-ui, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
   line-height: 1.7;
-  color: var(--text);
+  color: var(--title);
   background: var(--bg);
   color-scheme: light dark;
   -webkit-font-smoothing: antialiased;
@@ -19,8 +19,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #e0e0e0;
-    --text-muted: #999;
+    --title: #e0e0e0;
+    --title-muted: #999;
     --bg: #1b1b1f;
     --border: #333;
 
