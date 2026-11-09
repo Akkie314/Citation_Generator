@@ -10,7 +10,7 @@ Citation Generatorは、Webページの出典情報を簡単に作成するた�
 - 出典情報や、タイトルやURLなどのページ情報をワンクリックでコピーできます
 
 ## インストール方法
-- **オプション1(おすすめ)** - [ChromeWebStore](https://chromewebstore.google.com/)からインストール(離リンクは仮置き)
+- **オプション1(おすすめ)** - [ChromeWebStore](https://chromewebstore.google.com/detail/gaambbnjoocmcbomgfgipgjiioapiblf?utm_source=item-share-cb)からインストール
 - **オプション2** - githubから手動でインストール(開発者向けをみてください。)
 
 ## 使い方
