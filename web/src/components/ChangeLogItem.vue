@@ -1,11 +1,22 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { changeTypeLabel, type ChangeType } from '../changelog';
 
-defineProps<{
+const props = defineProps<{
     type: ChangeType;
     title: string;
     description?: string;
 }>();
+
+const URL_PATTERN = /(https?:\/\/[^\s<>"']+)/g;
+
+// 説明文を URL とそれ以外のテキストに分割する
+const segments = computed(() =>
+    (props.description ?? '')
+        .split(URL_PATTERN)
+        .filter(Boolean)
+        .map((text) => ({ text, isUrl: /^https?:\/\//.test(text) })),
+);
 </script>
 
 <template>
@@ -14,7 +25,10 @@ defineProps<{
         <div class="content">
             <span class="title">{{ title }}</span>
             <p v-if="description" class="description">
-                {{ description }}
+                <template v-for="(seg, i) in segments" :key="i">
+                    <a v-if="seg.isUrl" :href="seg.text" target="_blank" rel="noopener noreferrer">{{ seg.text }}</a>
+                    <template v-else>{{ seg.text }}</template>
+                </template>
             </p>
         </div>
     </li>
@@ -44,6 +58,12 @@ li {
     font-size: 1rem;
     color: var(--title-muted);
     white-space: pre-line;
+}
+
+.description a {
+    color: inherit;
+    text-decoration: underline;
+    word-break: break-all;
 }
 
 .badge {
