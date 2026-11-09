@@ -1,7 +1,7 @@
 # Citation Generator
 Citation Generatorは、Webページの出典情報を簡単に作成するためのChrome拡張機能です。ワンクリックで出典情報を作成できるため、論文やレポートの作成がこれまで以上にスムーズになります。
 
-`![出展情報ジェネレータ](image/screenshot.png)
+`![出展情報ジェネレータ](Docs/screenshot.png)
 
 ## 主な機能
 - 閲覧中のページの情報(タイトル、URL、サイト名、閲覧日)を取得できます。
