@@ -4,6 +4,7 @@ import type { PageInfo } from '@/utils/types';
 import { getPageInfo } from '@/utils/get-page-info';
 import { formatCitation } from '@/utils/format-citation';
 import { templateSetting, DEFAULT_TEMPLATE } from '@/utils/settings';
+import { CONFIG } from '@/utils/config';
 import DataBox from '@/components/DataBox.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import ResetButton from '@/components/ResetButton.vue';
@@ -58,6 +59,17 @@ watch(template, async (value) => {
     <ResetButton v-model="template" :default-value="DEFAULT_TEMPLATE"/>
   </DataBox>
   <p>プレースホルダー: {site_name}, {title}, {url}, {now_date}</p>
+  <hr/>
+
+  <p class="feedback">
+    <a :href="CONFIG.FEEDBACK_FORM_URL" target="_blank" rel="noopener noreferrer">
+      フィードバックを送る
+    </a>
+  </p>
 </template>
 
-<style scoped></style>
+<style scoped>
+p.feedback {
+  text-align: center;
+}
+</style>
