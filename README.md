@@ -21,13 +21,53 @@ Citation Generatorは、Webページの出典情報を簡単に作成するた�
 
 
 ## 開発者向け
-この拡張機能はNode.jsのような特別なビルドプロセスを必要としません。インストールは以下の方法で可能です。
-1. このレポジトリをクローンする
-2. Chromeブラウザで [chrome://extensions](chrome://extensions)を開きます。
-3. 右上の「デベロッパーモード」をONにします。
-4. 「パッケージ化されていない拡張機能を読み込む」をクリックして、クローンしたフォルダを選択します。
+この拡張機能は [WXT](https://wxt.dev/) + Vue 3 + TypeScript で作られています。開発にはNode.jsとnpmが必要です。
 
-またコードを修正した場合は、[chrome://extensions](chrome://extensions) からこの拡張機能の横にあるリロードボタンを押すことで変更を適用できます
+### 構成
+- `entrypoints/` - 拡張機能のエントリーポイント(`background.ts`、`popup/`)
+- `components/` - ポップアップで使うVueコンポーネント
+- `composables/` - Vueのコンポーザブル
+- `utils/` - ページ情報の取得、サイト名の推測、出典情報の整形、設定の保存などのロジック
+- `wxt.config.ts` - WXTとマニフェストの設定
+- `web/` - チェンジログ表示用のWebページ(Vite + Vue。拡張機能本体とは別のプロジェクトです)
+
+### 開発環境のセットアップ
+1. このレポジトリをクローンする
+2. 依存パッケージをインストールする(`wxt prepare`も自動で実行されます)
+   ```bash
+   npm install
+   ```
+3. 開発サーバーを起動する
+   ```bash
+   npm run dev
+   ```
+   Chromeが自動で開き、拡張機能が読み込まれます。コードを修正すると自動でリロードされます。
+
+### 主なコマンド
+| コマンド | 内容 |
+| --- | --- |
+| `npm run dev` | 開発サーバーを起動(Chrome) |
+| `npm run dev:firefox` | 開発サーバーを起動(Firefox) |
+| `npm run build` | 本番用にビルド(`.output/chrome-mv3`) |
+| `npm run build:firefox` | Firefox向けにビルド |
+| `npm run zip` | 公開用のzipを作成 |
+| `npm run zip:firefox` | Firefox向けのzipを作成 |
+| `npm run compile` | 型チェック(`vue-tsc --noEmit`) |
+
+### ビルドした拡張機能を手動で読み込む
+1. `npm run build` を実行します。
+2. Chromeブラウザで [chrome://extensions](chrome://extensions) を開きます。
+3. 右上の「デベロッパーモード」をONにします。
+4. 「パッケージ化されていない拡張機能を読み込む」をクリックして、`.output/chrome-mv3` フォルダを選択します。
+コードを修正した場合は、再度ビルドしたうえで [chrome://extensions](chrome://extensions) からこの拡張機能の横にあるリロードボ
+タンを押してください。
+
+### チェンジログページ(`web/`)
+```bash
+cd web
+npm install
+npm run dev
+```
 
 ## 工夫した点
 ### サイト名の高精度な自動推測機能
