@@ -3,7 +3,6 @@ import { CONFIG } from "@/utils/config";
 
 export default defineBackground(() => {
     browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
-        console.log(reason, previousVersion)
         if (reason !== 'update' || !previousVersion) return;
         
         const current = browser.runtime.getManifest().version;
